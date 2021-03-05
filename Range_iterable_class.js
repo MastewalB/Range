@@ -24,6 +24,31 @@ class Range {
     }
 
 
+    set() {
+        //A set is a collection of values. but unlike an array, sets don't store duplicate elements 
+        //and don't have ordering and indexing
+        let range_set = new Set();
+        let iter = this[Symbol.iterator]();
+        for (let result = iter.next(); !result.done; result = iter.next()) {
+            range_set.add(result.value);
+        }
+
+        return range_set;
+    }
+
+    map(func, start = this.from, end = this.to) {
+        if (!this.has(start) && !this.has(end)) {
+            throw Error("Invalid Range Value");
+        }
+        let iter = this[Symbol.iterator](start, end);
+        let map = new Map();
+        for (let result = iter.next(); !result.done; result = iter.next()) {
+            //console.log(result.value, func(result.value));
+            map.set(result.value, func(result.value));
+        }
+        return map;
+    }
+
 
     //from returns a function that returns increasing value of numbers 
     from(start) {
@@ -98,13 +123,8 @@ const sentence = represent`The Range class starts from ${from} and ends at ${to}
 
 
 //sets and maps
-//A set is a collection of values. but unlike an array, sets don't store duplicate elements 
-//and don't have ordering and indexing
-let set = new Set();
-for (let x of new Range(1, 10)) {
-    set.add(x);
-}
-//console.log(set);
+
+
 
 let map = new Map()
 for (let x of new Range(1, 10)) {
@@ -129,13 +149,16 @@ helps to handle a dynamic code
  */
 //construct
 let reflect = Reflect.construct(Range, [1, 5]);
-console.log(reflect);
+//console.log(reflect);
 
 //method call
 let reflect_method = Reflect.apply(add, Range, [2, 4]);
-console.log(reflect_method);
+//console.log(reflect_method);
 
-
-
-
-export default Range;
+let r = new Range(1, 10);
+console.log(r.set());
+console.log(r.has(2));
+console.log(r.map((x) => {
+    return x * x;
+}, 2, 4));
+//export default Range;
