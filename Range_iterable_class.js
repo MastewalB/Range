@@ -75,7 +75,7 @@ class Range {
         return to(from(start), end);
     }
 
-    //accenps an array and a generator(optional) then executes the genertor on the array
+    //accepts an array and a generator(optional) then executes the genertor on the array
     //the generator field is provided by closure, i.e the internal state of the function includes 
     //a reference to the scope in which the function definition appears
     element(array, gen) {
@@ -122,43 +122,7 @@ const sentence = represent`The Range class starts from ${from} and ends at ${to}
 //console.log([...new Range(-2, 2)]);
 
 
-//sets and maps
 
 
 
-let map = new Map()
-for (let x of new Range(1, 10)) {
-    map.set(x, Math.pow(x, 2));
-}
-//console.log(map);
-
-function add(...values) {
-    let total = 0;
-    for (let x of values) {
-        total += x;
-    }
-    return total;
-}
-
-
-
-///Reflect API
-/*
-it defines an API for "reflecting upon" objects and their properties.
-helps to handle a dynamic code
- */
-//construct
-let reflect = Reflect.construct(Range, [1, 5]);
-//console.log(reflect);
-
-//method call
-let reflect_method = Reflect.apply(add, Range, [2, 4]);
-//console.log(reflect_method);
-
-let r = new Range(1, 10);
-console.log(r.set());
-console.log(r.has(2));
-console.log(r.map((x) => {
-    return x * x;
-}, 2, 4));
-//export default Range;
+export { Range };
